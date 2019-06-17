@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+   <!--- basic page needs
+   ================================================== -->
+   <meta charset="utf-8">
+	<title>Nutri Meter</title>
+	<meta name="description" content="">  
+	<meta name="author" content="">
+
+   <!-- mobile specific metas
+   ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+ 	<!-- CSS
+   ================================================== -->
+   <link rel="stylesheet" href="css/base.css">
+   <link rel="stylesheet" href="css/vendor.css">  
+   <link rel="stylesheet" href="css/main.css">  
+
+   <!-- script
+   ================================================== -->
+	<script src="js/modernizr.js"></script>
+	<script src="js/pace.min.js"></script>
+
+   <!-- favicons
+	================================================== -->
+	<link rel="shortcut icon" href="abc.png" type="image/x-icon">
+	<link rel="icon" href="abc.png" type="image/x-icon">
+
+</head>
+
+<body id="top">
+
+
+   <!-- home
+   ================================================== -->
+    <section id="home" style="background-image: url(./images/bg.jpg);">
+
+   	<div class="overlay"></div>
+
+   	<div class="home-content-table">	
+        <div class="home-content-tablecell">
+            <div class="row">
+                <div class="col-twelve">		   			
+                    <h3 class="animate-intro"></h3>
+                        <h1 class="animate-intro">
+							Nutri Meter
+				  		</h1>	<br><br><br><br>
+                        <div class="more animate-intro">
+                            <a class="smoothscroll button stroke" href="#about">
+				  					Objective
+				  			</a>
+				  		</div>		
+                </div>
+            </div> <!-- end col-twelve --> 
+        </div> <!-- end row --> 
+       </div> <!-- end home-content-tablecell --> 		   
+
+       <div class="scrolldown">
+           <a href="#about" class="scroll-icon smoothscroll">		
+		   	Scroll Down		   	
+               <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+           </a>
+       </div>			
+    </section> <!-- end home -->
+
+
+   <!-- Objective
+   ================================================== -->
+   <section id="about">
+   	<div class="row about-wrap">
+   		<div class="col-full">
+   			<div class="about-profile-bg"></div>
+				<div class="intro">
+					<h3 class="animate-this">Objective</h3>
+                    <p  class="lead animate-this">In this day and age, where everyone is tracking all their steps we wanted to make something that will allow users to track all their nutrients and calorie intake and thats exactly what nutri meter does. </br></br>The objective of our Nutri Meter webapp is to calculate the daily calorie intake of a user and along with that provide the nutrition information of the food. Moreover, the user is provided the option to chat with chatbot which can help the user to provide the recipe of any food item which the user wants.
+                    </p>
+<!--
+          <a onclick="mySA('Presentation')" class="smoothscroll button stroke" href="#Presentation">Presentation</a>
+          <script>
+              function mySA(name) {
+                var e = document.getElementById(name);
+                 if(e.style.display === 'none')
+                    e.style.display = 'block';
+                 else
+                    e.style.display = 'none';
+                }
+            </script> 
+-->
+            </div>   
+        </div> <!-- end col-full  -->
+   	</div> <!-- end about-wrap  -->
+   </section> <!-- end about -->
+
+<!-- Presentation
+   ================================================== -->
+<!--
+   <section id="Presentation" style="display:none">
+   <section id="about" >
+    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT3XcWD0kIrghwD5GuieDXGJVBmE4PHSn18V5N9dQWQnmc_YTGwYQTTWQH77OvkrCvwWia21B2Y71ev/embed?start=false&loop=false&delayms=5000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+    </section>  
+ </section>
+-->
+
+<!-- Technologies
+   ================================================== -->
+   <section id="contact">
+    <div class="overlay"></div>
+    <div class="row narrow section-intro with-bottom-sep animate-this">
+      <div class="col-twelve">
+          <h3 class="animate-this" style="color:#589e00; font-size: 30px">Technologies and Platform</h3>
+          <p  class="lead animate-this">
+            Cognito<br>
+            DynamoDB<br>
+            Rekognition<br>
+            Lex<br>
+            SNS<br>
+            SQS<br>
+            S3<br>
+            API Gateway<br>
+            Edamam API<br>
+            HTML,CSS <br>
+            JavaScript<br>
+          </p>
+      </div> <!-- end col-full  -->
+    </div> <!-- end about-wrap  -->
+   </section> <!-- end about -->
+
+<!-- Architecture
+   ================================================== -->
+   <section id="Architecture">
+    <section id="about">
+        <div class="row about-wrap">
+            <div class="col-full">
+                <div class="about-profile-bg"></div>
+                <div class="intro">
+                    <h3 class="animate-this" >High Level Architecture</h3>
+                    <img src="images/archi.jpg" alt="High level archi" style="width:90%;height:90%;">
+                </div>
+            </div>
+        </div>
+   </section> <!-- end about -->
+ </section>
+
+<!-- Data Processing
+   ================================================== -->
+   <section id="Data Processing" style="background-image: url(./images/tra.png); background-size: cover;">
+    <div class="overlay"></div>
+    <div class="home-content-table">  
+       <div class="home-content-tablecell">
+        <div class="row">
+          <div class="col-twelve">            
+            <h3 class="animate-intro"></h3>
+            <h1 class="animate-intro">
+            Lets Start <br>
+            Tracking
+            </h1> 
+            <div class="more animate-intro">
+              <div class="col-twelve">
+                  <a href="https://mychat.auth.us-east-1.amazoncognito.com/signup?redirect_uri=https://s3.amazonaws.com/nutri-meter-cloud/index.html&response_type=code&client_id=220uvbrttfuvmv68vik41sbi3q" target="_blank" title="SA" class="button button-primary">Sign Up</a>
+                  <a href="https://mychat.auth.us-east-1.amazoncognito.com/login?redirect_uri=https://s3.amazonaws.com/nutri-meter-cloud/index.html&response_type=code&client_id=220uvbrttfuvmv68vik41sbi3q" target="_blank" title="SA" class="button button-primary">Sign in</a>
+              </div> 
+            </div>    
+          </div> <!-- end col-twelve --> 
+        </div> <!-- end row --> 
+      </div> <!-- end home-content-tablecell -->        
+    </div> <!-- end home-content-table -->
+   </section> <!-- end home -->
+
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="js/jquery-2.1.3.min.js"></script>
+   <script src="js/plugins.js"></script>
+   <script src="js/main.js"></script>
+
+</body>
+
+</html>

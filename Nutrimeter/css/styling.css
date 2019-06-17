@@ -1,0 +1,83 @@
+.content-header{
+        background-color:#e5e5e5;
+        position:relative
+      }
+
+      .content-header .heading{
+          float:left;
+          color:black;
+          font-size:18px;
+          font-weight:700;
+          text-transform:uppercase;
+          line-height:normal;
+          padding:13px 16px 11px;
+          margin:0
+      }
+
+      .content-header.bg-wide{
+          background-color:#91c602
+      }
+
+      .content-header.bg-wide .heading{
+          background:none
+      }
+
+      .content-header.bg-wide .actions{
+          float:right;
+          padding-top:13px
+      }
+    
+    .nutritionvalue .nutritionlabel{
+        font-weight:700;
+        font-size:14px;
+        color:#333;
+        font-family:Arial
+      }
+    
+    .pull-right {
+        float: right!important;
+      }
+    
+      .hidden {
+          display: none!important;
+      }
+    
+/*
+    .bar{background:#e4e7e9;height:6px;}
+.bar .fill{height:100%;display:block;float:left;width:0%;
+  transition:width 2s;
+  -webkit-transition:width 2s;
+  -moz-transition:width 2s;
+  -o-transition:width 2s;
+  -ms-transition:width 2s;
+}
+.bar .fill.under{background:#96c900}
+.bar .fill.over{background:#f44c63;}
+#nutritionBars .bar .fill.over{background:#f44c63;}
+*/
+    
+    
+    .img-thumbnail {
+        border-radius: 50%;
+    display: inline-block;
+    max-width: 10%;
+    height: auto;
+    padding: 5px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+    .head{
+        margin: auto;
+        text-align: center;
+        text-transform: uppercase;
+        color: white;
+        padding: 13px
+        
+    }
+    
+    .nutritionvalue{
+        padding-top: 7px;
+    }

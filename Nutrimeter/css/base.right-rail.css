@@ -1,0 +1,22 @@
+﻿/*Desktop/Common*/
+.rightrail{width:300px;float:left}
+.rightrail a{}
+.rightrail a:hover{ color: #fe5000; text-decoration: underline; }
+.rightrail .block{margin:0 0 40px;}
+.rightrail .guidelines ul { width: 100%; padding: 0; }
+.rightrail .inline_paragraph p { display: inline; }
+.rightrail .coachingAnnouncement { font-family: 'HelveticaNeueW01-45Ligh',Arial; }
+.rightrail .coachingAnnouncement .greenStripe { height: 6px; background: #44B029; display: block; }
+.rightrail .coachingAnnouncementDiv { background: #fff; padding: 10px 20px 30px; }
+.rightrail .coachingAnnouncementDiv button { border:0; padding: 16px; }
+.rightrail .coachingAnnouncementDiv p.recommendText{color:#42B029;font-size: 20px;}
+.leftrail{width:652px;float:left;margin-right:30px}
+@media (max-width:1060px) {
+  .rightrail{width:auto;margin-left:-42px;float:none}
+  .rightrail .block{width:340px;margin-left:42px;float:left}
+  .leftrail{width:100%;margin-right:0;float:none}
+}
+@media (max-width:786px) {
+  .rightrail{width:auto;margin-left:0;float:none}
+  .rightrail .block{width:auto;margin-left:0;float:none}
+}

@@ -1,0 +1,42 @@
+﻿/* Nutrition Tracker Body Styles*/
+#divNutritionBody {margin-bottom:61px;}
+#divNutritionBody .calorie-stats {display:inline-block;padding:0 8% 0 0;}
+#divNutritionBody .calorie-stats .value{color:#62b5e5;}
+#divNutritionBody .calorie-stats .total{color:#d2d2d2;}
+#divNutritionBody .calorie-stats .text{color:#4e5052;}
+#divNutritionBody .calorie-stats .balance{font-size:50px;font-family: 'MuseoSans700',Arial;}
+#divNutritionBody .calorie-stats .balance.text{font-size:24px;font-family: 'MuseoSans700',Arial;}
+#divNutritionBody .calorie-stats .consumed, #divNutritionBody .calorie-stats .burned{font-size:42px;}
+#divNutritionBody .calorie-stats .consumed.text, #divNutritionBody .calorie-stats .burned.text{font-size:24px;}
+#divNutritionBody section.bars{width:47%;margin:2% 0 1%;}
+#divNutritionBody .nutritionvalue, #divNutritionBody .foodvalue {font-size:12px;color:#999999;clear:both;font-family: Arial;margin: 3px 0;}
+#divNutritionBody .target {font: inherit;text-transform: capitalize;color:#999999;font-size: 12px;}
+#divNutritionBody .targetval {color:#999999;}
+#divNutritionBody #Calories{margin-top:15px;}
+#divNutritionBody .unit {text-transform:lowercase;}
+#divNutritionBody .bar{background: #e4e7e9;height: 6px;margin: 0 0 18px;}
+/*#divNutritionBody .bar .fill{height:inherit;display:block;float:left;} 
+#divNutritionBody .bar .fill.under{background:#92c602;}
+#divNutritionBody .bar .fill.over {background:#FFA300;}*/
+#divNutritionBody .infoIcon{position:absolute;top:0;right:11px;bottom:0;margin:auto 0;height:19px;width:19px;background-image:url("//images.agoramedia.com/mealplanner/theme/base/images/journal/FF-Journal-Info-Icon.png");background-repeat:no-repeat;}
+#divNutritionBody .infoIconToolTip{position:absolute;opacity:0;padding:25px;width:194px;height:auto;left:-250px;top:8px;box-shadow: 0px 3px 3px 0px #888888;background-color:#ffffff; font-family:Arial; font-size:14px}
+#divNutritionBody .infoIcon:hover .infoIconToolTip{opacity:1;}
+#nutritionBars #divNTRight .infoIcon{position:relative; top:-52px; left:183px;}
+.rightrail #nutritionBars{height:380px;}
+
+@media print {
+  .rightrail #divNutritionBody { display:none; }
+  .rightrail #nutritionBars .componentHeaderBar .heading { padding-left:0; font-size:10px; }
+
+  .only-print #divNutritionBody { margin-bottom:0; }
+  .only-print #divNutritionBody .componentHeaderBar { display:none; }
+  .only-print #divNutritionBody .nutritionvalue, .only-print #divNutritionBody .bar { width:190px; }
+  .only-print #divNutritionBody .nutritionvalue, 
+  .only-print #divNutritionBody .foodvalue,
+  .only-print #divNutritionBody .nutritionvalue .nutritionlabel, 
+  .only-print #divNutritionBody .target { font-size:10px; }
+  .only-print #divNutritionBody .bar { border-top:4px solid #d8d8d8; position:relative; margin-bottom:24px; }
+  .only-print #divNutritionBody .bar .fill.under, .only-print #divNutritionBody .bar .fill.over { border-top:4px solid #000000; position:absolute; top:-4px; left:0; }
+  .only-print #divNutritionBody #Sodium { margin-top:15px; }
+  #divDailyMealPlan .nutritionBlocks { width: 190px; float:left; margin-left:30px; }
+}

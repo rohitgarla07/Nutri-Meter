@@ -1,0 +1,728 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/base.right-rail.css">
+    <link rel="stylesheet" href="css/article.nutrition-tracker.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="css/styling.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
+    <script type="text/javascript" src="aws-sdk.min.js"></script>
+    <script type="text/javascript" src="aws-cognito-sdk.min.js"></script>
+    <script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="apigClient.js"></script>
+    
+    <style>
+
+        label{
+            padding: 10px;
+            background: #4CAF50; 
+            display: table;
+            color: #fff;
+            float: inherit;
+         }
+        input[type="file"] {
+            display: none;  
+        }
+        #upload-button{
+            padding: 9px;
+            background: #4CAF50; 
+            display: table;
+            color: #fff;
+            float: inherit;
+            margin-left:10px;
+         }
+        #calorie-button{
+            padding: 9px;
+            background: #4CAF50; 
+            display: table;
+            color: #fff;
+/*            float: left;*/
+            margin-left:55px;
+            margin-top: 3px;
+        }
+        #Recipe-button{
+            padding: 9px;
+            background: #4CAF50; 
+            display: table;
+            color: #fff;
+            float: inherit;
+            margin-left:8%;
+            margin-top: -1%;
+        }
+        #meals div{
+            background: white; 
+            width:51%; 
+            height: 200px; 
+            margin-left: 25%; 
+        }
+        #mealss div{
+            background: white; 
+            width:51%; 
+            height: 200px; 
+            margin-left: 25%; 
+        }
+        h4{
+            text-align: center;
+            color: black;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: normal;
+            padding-top: 13px;
+            margin: 0;
+        }
+        .w3-container, .w3-panel {
+            padding: 0.01em 1px;
+        }
+        
+    </style>
+</head>
+
+<body style="background-image: url('images/tracking.jpeg'); background-size: cover">
+
+    <div style="background: white;">
+        <img src="images/logo1.jpg" style="width: 300px; height: 60px; margin-left: 35%; padding:5px;">
+    </div>
+    <br>
+
+    <!----------------------------User photo--------------------------------->
+
+    <div class="text-center" style="margin-left: 100px;">
+        <img src="images/user.jpg" class="img-thumbnail" alt="avatar">
+        <h2 id="name" style="margin-left: 10px; color: white">Name</h2>
+    </div>
+    <div style="float: left; margin-top:-100px; margin-left: 500px ">
+        <label id="#bb">Upload Your Image
+            <input type="file" id="file-chooser" />
+        </label>
+        <button type="button" id="upload-button">Submit</button>
+        <!-- Enter the URL of the cognito link -->
+        <a href="xxxxxxxxxx" id="upload-button">Sign Out</a>    
+        <div id="results"></div>
+    </div>
+
+    <!----------------------------Nutirtion div bar--------------------------------->
+
+    <div class="rightrail" style="border: 1px solid grey; padding: 5px; width: 20%; margin-left: 2%; background: white">
+
+        <section id="divNutritionBody" class="divNutritionBody  block clearfix">
+            <input type="hidden" id="hdnTotalCaloriesBurned" value="0">
+            <div id="setting-bars">
+                <div id="nutritionBars">
+                    <header class="componentHeaderBar content-header clearfix">
+                        <h2 class="componentHeader primary heading">Nutrition Summary</h2>
+
+                    </header><br><br>
+
+                    <div class="w3-container w3-green" style="width:100%; height:2px"></div>
+
+
+                    <div class="nutritionBlocks">
+                        <div id="Calories" class="nutritionvalue">
+                            <span class="nutritionlabel">Calories</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetCalories">0</span>cal/
+                                <span class="targetval" >2,050</span>cal
+                            </span>
+                            <span class="hidden turn-red-value">2100</span>
+                        </div>
+                        <div class="w3-light-grey w3-tiny calories">
+                            <div class="w3-container w3-green" id="targetCaloriesBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+
+                        <div id="TotalFat" class="nutritionvalue">
+                            <span class="nutritionlabel">Fat</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetTotalFat">0</span>g/
+                                <span class="targetval" >55</span>
+                                <span class="unit">g</span>
+                            </span>
+                            <span class="hidden turn-red-value">80</span>
+                        </div>
+                        <div class="w3-light-grey w3-tiny fat">
+                            <div class="w3-container w3-green" id="targetTotalFatBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+
+                        <div id="SatFat" class="nutritionvalue">
+                            <span class="nutritionlabel">Saturated fat</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetSatFat">0</span>g/
+                                <span class="targetval" >22</span>
+                                <span class="unit">g</span>
+                            </span>
+                            <span class="hidden turn-red-value">26</span>
+                        </div>
+                        <div class="w3-light-grey w3-tiny satfat">
+                            <div class="w3-container w3-green" id="targetSatFatBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+
+                        <div id="Protein" class="nutritionvalue">
+                            <span class="nutritionlabel">Protein</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetProtein">0</span>g/
+                                <span class="targetval">125</span>
+                                <span class="unit">g</span>
+                            </span>
+                            <span class="hidden turn-red-value">160</span>
+                        </div>
+                        <div class="w3-light-grey w3-tiny protein">
+                            <div class="w3-container w3-green" id="targetProteinBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+                        
+
+                        <div id="Cholesterol" class="nutritionvalue">
+                            <span class="nutritionlabel">Cholesterol</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetCholesterol">0</span>mg/
+                                <span class="targetval" >300</span>
+                                <span class="unit">mg</span>
+                            </span>
+                            <span class="hidden turn-red-value">300</span>
+                        </div>
+                        
+                        <div class="w3-light-grey w3-tiny cholestrol">
+                            <div class="w3-container w3-green" id="targetCholesterolBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="nutritionBlocks">
+                        <div id="Sodium" class="nutritionvalue">
+                            <span class="nutritionlabel">Sodium</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetSodium">0</span>mg/
+                                <span class="targetval" >2,300</span>
+                                <span class="unit">mg</span>
+                            </span>
+                            <span class="hidden turn-red-value">2300</span>
+                        </div>
+                        <div class="w3-light-grey w3-tiny sodium">
+                            <div class="w3-container w3-green" id="targetSodiumBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+
+                        <div id="Iron" class="nutritionvalue">
+                            <span class="nutritionlabel">Iron</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetIron">0</span>g/
+                                <span class="targetval">20</span><span class="unit">g</span>
+                            </span>
+                            <span class="hidden turn-red-value">150</span>
+                        </div>
+                        <div class="w3-light-grey w3-tiny sugar">
+                            <div class="w3-container w3-green" id="targetIronBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+
+                        <div id="Vitamin" class="nutritionvalue">
+                            <span class="nutritionlabel">Vitamin D</span>
+                            <span class="target pull-right">
+                                <span class="foodvalue" id="targetVitamin">0</span>g/
+                                <span class="targetval" >5</span>
+                                <span class="unit">g</span>
+                            </span>
+                            <span class="hidden turn-red-value">27</span>
+                        </div>
+                        <div class="w3-light-grey w3-tiny carbs">
+                            <div class="w3-container w3-green" id="targetVitaminBar" style="width:0%; max-width: 100%; height:6px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!----------------------------Meals --------------------------------->
+
+    <section id="meals">
+        <p id="counter" style="display: none">1</p>
+    </section>
+
+    <section id="mealss">
+        <div id="mealsugg" style="height: 240px">
+            <h4>Recipe Suggestions</h4>
+            <img src="images/recipe1.jpg" width="25%" height="55%" style="margin:3%">
+            <img src="images/recipe2.jpeg" width="25%" height="55%" style="margin:3%">
+            <img src="images/recipe3.jpeg" width="25%" height="55%" style="margin:3%">
+            <a href="https://recipes.heart.org/recipes/skillet-ham-hash" target="_blank" id="Recipe-button" style="float: left">Show Recipe</a>
+            <a href="https://www.thespruceeats.com/how-to-make-dosa-1957716" target="_blank" id="Recipe-button" style="float: left; margin-left:17%">Show Recipe</a>
+            <a href="https://www.jaroflemons.com/healthy-sriracha-shredded-chicken-tacos/" target="_blank" id="Recipe-button" style="float: left; margin-left:17%">Show Recipe</a>
+        </div><br>
+    </section>
+    <!----------------------------Chatbot --------------------------------->
+    
+    <script type="text/javascript">
+        let apigClient = {};
+        var username = "";
+
+        $(document).ready(function() {
+            var messages = [];
+            var lastUserMessage = "";
+            var botMessage = "";
+            var botName = 'xxxxxxxxxx'; // enter the name of the lexbot
+
+            var AWSconfig = {
+                "accessKey": "",
+                "secretKey":"",
+                "S3Bucket":"xxxxxx",    // url of the s3 bucket
+                "region":"us-east-1",
+                "sessionToken":"",
+                "client_id" :"xxxxxx", // enter client ID
+                "user_pool_id" : "xxxxxx", // enter uer_pool_id
+                "cognito_domain_url":"xxxxx",    // enter cognito domain url
+                "redirect_uri" : "xxxxx",    // 
+                "identity_pool_id":"us-east-1:xxxxxx"   // enter identity pool id
+            };
+
+
+            var getParameterByName = function(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            };
+
+            console.log("Code = " + getParameterByName("code"));
+
+            var exchangeAuthCodeForCredentials = function({
+                auth_code = getParameterByName("code"),
+                client_id = AWSconfig.client_id,
+                identity_pool_id = AWSconfig.identity_pool_id,
+                aws_region = AWSconfig.region,
+                user_pool_id = AWSconfig.user_pool_id,
+                cognito_domain_url = AWSconfig.cognito_domain_url,
+                redirect_uri = AWSconfig.redirect_uri
+            }) {
+                return new Promise((resolve, reject) => {
+                    var settings = {
+                        url: `${cognito_domain_url}/oauth2/token`,
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Authorization' : 'Basic xxxxxx'        // base 64 encode of app_client_id:App_client_secret
+                        },
+                        data: {
+                            grant_type: 'authorization_code',
+                            client_id: client_id,
+                            redirect_uri: redirect_uri,
+                            code: auth_code
+                        }
+                    };
+
+                    console.log(JSON.stringify(settings));
+
+                    function parseJwt(token) {
+                        var base64Url = token.split('.')[1];
+                        var base64 = base64Url.replace('-', '+').replace('_', '/');
+                        return JSON.parse(window.atob(base64));
+                    };
+
+
+                    $.ajax(settings).done(function(response) {
+                        console.log('OAuth2 Token Call Responded');
+                        console.log(response);
+                        userdata = parseJwt(response.id_token);
+                        console.log(Object.values(userdata));
+                        userinfo = Object.values(userdata);
+
+                        console.log(userinfo)
+                        username = userinfo[7];
+                        
+                        // enter the URL fof the API gateway
+                        var API_URL = "https://w0thkdj8bd.execute-api.us-east-1.amazonaws.com/first/dynamodb";
+
+                        $(document).ready(function() {
+                            $.ajax({
+                                type: 'GET',
+                                url: API_URL,
+                                data: {
+                                    "user": username,
+                                },
+                                success: function(data) {
+                                    var i = Object.keys(data['meals']).length;
+                                    document.getElementById('counter').innerHTML = (i+1).toString();
+                                    Object.entries(data['meals']).forEach(([key, value]) => {
+
+                                        $("#meals").append('<div id="addmeal_' + i.toString() + '"><img src="abc" id="i' + key + '" width="30%" height="160px" style="margin:17px; float: left"><br><h4 style="margin-top: -18px; margin-bottom: 10px" id="Meal_' + i.toString() + '">Nutrients Info</h4><table id="t' + key + '" style="width:50%;"></table>' + '</div><br><br>');
+
+                                        setTimeout(function() {
+
+                                            var txt = "<tr>";
+                                            var cc = 0;
+
+                                            var tableid = 't' + key ;
+                                            if (tableid.substr(1,).localeCompare(key) === 0){
+                                                Object.entries(data['meals'][key]).forEach(([key1, value1]) => {
+
+                                                    if (key1.localeCompare('imgURL') === 0){
+                                                        document.getElementById('i'+key).src = value1;
+                                                    }
+
+                                                    if (key1.localeCompare('Calories') === 0){
+                                                        var cal = document.getElementById('targetCalories').innerHTML;
+                                                        document.getElementById('targetCalories').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetCaloriesBar').style.width = (parseInt(document.getElementById('targetCalories').innerHTML)/20.50).toString() + "%";
+                                                    }
+                                                    if (key1.localeCompare('Fats') === 0){
+                                                        var cal = document.getElementById('targetTotalFat').innerHTML;
+                                                        document.getElementById('targetTotalFat').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetTotalFatBar').style.width = (parseInt(document.getElementById('targetTotalFat').innerHTML)/0.55).toString() + '%';
+                                                    }
+                                                    if (key1.localeCompare('SatFat') === 0){
+                                                        var cal = document.getElementById('targetSatFat').innerHTML;
+                                                        document.getElementById('targetSatFat').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetSatFatBar').style.width = (parseInt(document.getElementById('targetSatFat').innerHTML)/0.22).toString() + '%';
+                                                    }
+                                                    if (key1.localeCompare('Cholestrol') === 0){
+                                                        var cal = document.getElementById('targetCholesterol').innerHTML;
+                                                        document.getElementById('targetCholesterol').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetCholesterolBar').style.width = (parseInt(document.getElementById('targetCholesterol').innerHTML)/3.00).toString() + '%';
+                                                    }
+                                                    if (key1.localeCompare('Sodium') === 0){
+                                                        var cal = document.getElementById('targetSodium').innerHTML;
+                                                        document.getElementById('targetSodium').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetSodiumBar').style.width = (parseInt(document.getElementById('targetSodium').innerHTML)/23.00).toString() + '%';
+                                                    }
+                                                    if (key1.localeCompare('Protein') === 0){
+                                                        var cal = document.getElementById('targetProtein').innerHTML;
+                                                        document.getElementById('targetProtein').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetProteinBar').style.width = (parseInt(document.getElementById('targetProtein').innerHTML)/1.60).toString() + '%';
+                                                    }
+                                                    if (key1.localeCompare('Vitamin D') === 0){
+                                                        var cal = document.getElementById('targetVitamin').innerHTML;
+                                                        document.getElementById('targetVitamin').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetVitaminBar').style.width = (parseInt(document.getElementById('targetVitamin').innerHTML)/0.5).toString() + '%';
+                                                    }
+                                                    if (key1.localeCompare('Iron') === 0){
+                                                        var cal = document.getElementById('targetIron').innerHTML;
+                                                        document.getElementById('targetIron').innerHTML = parseInt(cal) + parseInt(value1);
+                                                        document.getElementById('targetIronBar').style.width = (parseInt(document.getElementById('targetIron').innerHTML)/0.20).toString() + '%';
+                                                    }
+                                                    
+                                                    txt += "<td>" + key1 + '</td><td>' + parseInt(value1) + '</td>';
+                                                    cc += 1;
+                                                    if (cc % 2 === 0){
+                                                        txt += "</tr><tr>"
+                                                    }
+                                                });
+
+                                                txt += "</tr>"
+                                                document.getElementById(tableid).innerHTML = txt;
+                                                document.getElementById(tableid).deleteRow(-1);
+                                            }
+                                        });
+                                        i = i -1;
+                                    },1000);
+                                }
+                            })
+                        });
+                        // -------------------------------------------------------------
+                        if (response.id_token) {
+                            AWS.config.region = aws_region;
+                            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                                IdentityPoolId: identity_pool_id,
+                                Logins: {
+                                    [`cognito-idp.${aws_region}.amazonaws.com/${user_pool_id}`]: response.id_token
+                                }
+                            });
+
+                            console.log({
+                                IdentityPoolId: identity_pool_id,
+                                Logins: {
+                                    [`cognito-idp.${aws_region}.amazonaws.com/${user_pool_id}`]: response.id_token
+                                }
+                            });
+
+                            AWS.config.credentials.refresh(function(error) {
+                                console.log("Error", error);
+                                if (error) {
+                                    reject(error);
+                                } else {
+                                    console.log('Successfully Logged In');
+                                    resolve(AWS.config.credentials);
+                                }
+                            });
+                        } else {
+                            console.log("Response " + response + " " + JSON.stringify(response))
+                            reject(response);
+                        }
+                    });
+                });
+            };
+
+            console.log("Making call to exchange auth credentials..");
+
+            exchangeAuthCodeForCredentials({
+                    auth_code: getParameterByName("code"),
+                    client_id: AWSconfig.client_id,
+                    identity_pool_id: AWSconfig.identity_pool_id,
+                    aws_region: AWSconfig.region,
+                    user_pool_id: AWSconfig.user_pool_id,
+                    cognito_domain_url: AWSconfig.cognito_domain_url,
+                    redirect_uri: AWSconfig.redirect_uri
+                })
+                .then(function(response) {
+                    console.log("Inside Then Function", response);
+                    apigClient = apigClientFactory.newClient({
+                        accessKey: response.accessKeyId,
+                        secretKey: response.secretAccessKey,
+                        sessionToken: response.sessionToken,
+                        region: "us-east-1"
+                    });
+                })
+                .catch(function(error) {
+                    console.log("error = " + this.error);
+                    console.log("response = " + this.response);
+                });
+
+            console.log("Call done\n");
+
+        });
+
+
+        function awsChat() {
+            var message = document.getElementById("msgId").value;
+            var d = new Date();
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+                "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            var textarea = document.getElementById('chatbottext');
+
+            var params = {};
+
+            var body = {
+                "messages": message.charAt(0).toUpperCase() + message.slice(1)
+            };
+
+            var additionalParams = {};
+
+            $("#chatbottext").append('<div class="you">' + message.charAt(0).toUpperCase() + message.slice(1) + '<div class="timestamp">' + d.getHours() + ":" + ('0' + d.getMinutes()).slice(-2) + '</div></div>');
+
+            apigClient.chatbotPost(params, body, additionalParams)
+                .then(function(result) {
+                    console.log(result)
+                    $("#chatbottext").append('<div class="bot">' + result.data + '<div class="timestamp">' + monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getHours() + ":" + ('0' + d.getMinutes()).slice(-2) + '</div></div>');
+
+                    textarea.scrollTop = textarea.scrollHeight;
+
+                    $('#msgId').val(function() {
+                        return this.defaultValue;
+                    });
+                }).catch(function(result) {
+                    alert(result.body);
+                });
+        };
+    </script>
+
+
+    <div class="chat">
+        <div class="chat-title">
+            <h1>Chatbot</h1>
+            <figure class="avatar">
+                <img src="https://cdn-images-1.medium.com/max/348/1*UfDH65tcj5dtsusnxklcTA.png">
+            </figure>
+        </div>
+
+        <div class="form-control" id="chatbottext"></div>
+
+        <div class="message-box">
+            <input type="text" class="message-input" placeholder="Type message..." id="msgId">
+            <button type="submit" class="message-submit" onclick="awsChat();" id="mybtn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        var input = document.getElementById("msgId");
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("mybtn").click();
+            }
+        })
+    </script>
+
+    <!--------------- To add the upload button and push to S3  ------------------>
+
+    <script type="text/javascript">
+        AWS.config.region = 'us-east-1'; // 1. Enter your region
+
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: "us-east-1:xxxxxx", // Identity pool ID for the upload, different from the original one
+
+        });
+
+        AWS.config.credentials.get(function(err) {
+            if (err) alert(err);
+            console.log(AWS.config.credentials);
+        });
+
+        var bucketName = 'xxxxxx'; // Enter your bucket name
+        var bucket = new AWS.S3({
+            params: {
+                Bucket: bucketName
+            }
+        });
+
+        var fileChooser = document.getElementById('file-chooser');
+        var button = document.getElementById('upload-button');
+        var results = document.getElementById('results');
+        console.log(username);
+        $(function() {
+            $('#name').text("Cloud");
+        });
+        button.addEventListener('click', function() {
+
+            var file = fileChooser.files[0];
+
+            if (file) {
+                results.innerHTML = '';
+                var objKey = username + '/' + file.name;
+                var params = {
+                    Key: objKey,
+                    ContentType: file.type,
+                    Body: file,
+                    ACL: 'public-read'
+                };
+
+                bucket.putObject(params, function(err, data) {
+                    if (err) {
+                        results.innerHTML = 'ERROR: ' + err;
+                    } else {
+                        listObjs();
+                    }
+                });
+            } else {
+                results.innerHTML = 'Nothing to upload.';
+            }
+
+            $(this).each(function() {
+                setTimeout(function() {
+                    var source = "https://s3.amazonaws.com/" + bucketName + "/" + username + '/' + file.name;
+                    
+                    var i  = document.getElementById('counter').innerHTML;
+                    console.log(i)
+                    
+                    $("#meals").prepend('<div id="addmeal_' + i.toString() + '"><img src="' + source + '" id="addmeal1" width="30%" height="160px" style="margin:17px; float: left"><br><h4 style="margin-top: -18px; margin-bottom: 10px" id="Meal_' + i.toString() + '">Nutrients Info</h4><table id="tMeals_' + i.toString() + '" style="width:50%;"></table>' + '</div><br><br>');
+                    
+                    document.getElementById('counter').innerHTML = parseInt(i) +1 ;
+                    // -----------------------------------
+                    console.log(i)                    
+                    var datta = {"meals": {}}
+                    console.log(Object.keys(datta['meals']).length);
+                }, 1000);
+            });
+             
+            // -----------------------------------------
+
+            // enter the URL fof the API gateway
+            var API_URL = "https://w0thkdj8bd.execute-api.us-east-1.amazonaws.com/first/dynamodb";
+
+            $(document).ready(function() {
+                setTimeout(function() {
+                    $.ajax({
+                        type: 'GET',
+                        url: API_URL,
+                        data: {
+                            "user": username,
+                        },
+                        success: function(data) {
+                            console.log(data['meals'])
+                            var txt = "<tr>";
+                            var cc = 0;
+                            var i =  parseInt(document.getElementById('counter').innerHTML) - 1 ;
+                            Object.entries(data['meals']).forEach(([key, value]) => {
+                                var tableid = "tMeals_" + i.toString() ;
+                                if (tableid.substr(1,).localeCompare(key) === 0){
+                                    Object.entries(data['meals'][key]).forEach(([key1, value1]) => {
+                                        if (key1.localeCompare('Calories') === 0){
+                                            var cal = document.getElementById('targetCalories').innerHTML;
+                                            document.getElementById('targetCalories').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetCaloriesBar').style.width = (parseInt(document.getElementById('targetCalories').innerHTML)/20.50).toString() + "%";
+                                        }
+                                        if (key1.localeCompare('Fats') === 0){
+                                            var cal = document.getElementById('targetTotalFat').innerHTML;
+                                            document.getElementById('targetTotalFat').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetTotalFatBar').style.width = (parseInt(document.getElementById('targetTotalFat').innerHTML)/0.55).toString() + '%';
+                                        }
+                                        if (key1.localeCompare('SatFat') === 0){
+                                            var cal = document.getElementById('targetSatFat').innerHTML;
+                                            document.getElementById('targetSatFat').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetSatFatBar').style.width = (parseInt(document.getElementById('targetSatFat').innerHTML)/0.22).toString() + '%';
+                                        }
+                                        if (key1.localeCompare('Cholestrol') === 0){
+                                            var cal = document.getElementById('targetCholesterol').innerHTML;
+                                            document.getElementById('targetCholesterol').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetCholesterolBar').style.width = (parseInt(document.getElementById('targetCholesterol').innerHTML)/3.00).toString() + '%';
+                                        }
+                                        if (key1.localeCompare('Sodium') === 0){
+                                            var cal = document.getElementById('targetSodium').innerHTML;
+                                            document.getElementById('targetSodium').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetSodiumBar').style.width = (parseInt(document.getElementById('targetSodium').innerHTML)/23.00).toString() + '%';
+                                        }
+                                        if (key1.localeCompare('Protein') === 0){
+                                            var cal = document.getElementById('targetProtein').innerHTML;
+                                            document.getElementById('targetProtein').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetProteinBar').style.width = (parseInt(document.getElementById('targetProtein').innerHTML)/1.60).toString() + '%';
+                                        }
+                                        if (key1.localeCompare('Vitamin D') === 0){
+                                            var cal = document.getElementById('targetVitamin').innerHTML;
+                                            document.getElementById('targetVitamin').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetVitaminBar').style.width = (parseInt(document.getElementById('targetVitamin').innerHTML)/0.5).toString() + '%';
+                                        }
+                                        if (key1.localeCompare('Iron') === 0){
+                                            var cal = document.getElementById('targetIron').innerHTML;
+                                            document.getElementById('targetIron').innerHTML = parseInt(cal) + parseInt(value1);
+                                            document.getElementById('targetIronBar').style.width = (parseInt(document.getElementById('targetIron').innerHTML)/0.20).toString() + '%';
+                                        }
+                                        
+                                        txt += "<td>" + key1 + '</td><td>' + parseInt(value1) + '</td>';
+                                        cc += 1;
+                                        if (cc % 2 === 0){
+                                            txt += "</tr><tr>"
+                                        }
+                                    });
+
+                                    txt += "</tr>"
+                                    document.getElementById(tableid).innerHTML = txt;
+                                    document.getElementById(tableid).deleteRow(-1);
+                                }
+                            });
+                        }
+                    })
+                }, 5000);
+            });
+            // -----------------------------------------
+        }, false);
+
+        function listObjs() {
+            var prefix = 'testing';
+            bucket.listObjects({
+                Prefix: prefix
+            }, function(err, data) {
+                if (err) {
+                    results.innerHTML = 'ERROR: ' + err;
+                } else {
+                    var objKeys = "";
+                    data.Contents.forEach(function(obj) {
+                        objKeys += obj.Key + "<br>";
+                    });
+                    results.innerHTML = objKeys;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
